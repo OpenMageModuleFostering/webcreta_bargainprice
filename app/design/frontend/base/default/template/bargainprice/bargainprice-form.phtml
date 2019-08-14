@@ -1,0 +1,80 @@
+
+<div id="bargainprice_form_div" class="bargainprice_form" >
+	<?php
+		if(Mage::getSingleton('customer/session')->isLoggedIn()) {
+			$customerData = Mage::getSingleton('customer/session')->getCustomer();   
+		}
+		
+		$product_id = $_POST['product_id'];
+		$product_sku = $_POST['product_sku'];
+		
+		$p = Mage::getModel('catalog/product')->load($product_sku);
+		
+		$product_name = $_POST['product_name'];
+		$product_price = $_POST['product_price'];
+	?>
+	<form method="post" id="newpriceForm" id="npForm">
+		<input type="hidden" value="<?php echo $customerData->getId(); ?>" id="customer_id" name="customer_id"/>
+		<input type="hidden" value="<?php echo $product_id; ?>" id="product_id" name="product_id"/>
+		
+		<div class="fieldset">
+			<h2 class="legend">Bargain Price Information</h2>
+			<ul class="form-list">
+				<li class="fields">
+					<div class="field">
+						<label class="required" for="name"><em>*</em>Name</label>
+						<div class="input-box">
+							<input type="text" class="input-text required-entry" value="<?php echo $customerData->getName(); ?>" title="Name" id="customer_name" name="name" readonly/>
+						</div>
+					</div>
+					<div class="field">
+						<label class="required" for="email"><em>*</em>Email</label>
+						<div class="input-box">
+							<input type="text" class="input-text required-entry validate-email" value="<?php echo $customerData->getEmail(); ?>" title="Email" id="customer_email" name="email" readonly/>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="field">
+						<label for="telephone">Product SKU</label>
+						<div class="input-box">
+							<input type="text" class="input-text" value="<?php echo $p->getSku(); ?>" id ="product_sku" name="product_sku" readonly/>
+						</div>
+					</div>
+					<div class="field">
+						<label for="telephone">Product Name</label>
+						<div class="input-box">
+							<input type="text" class="input-text" value="<?php  echo $product_name; ?>" id="product_name" name="product_name" readonly/>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="field">
+						<label for="telephone">Product Price</label>
+						<div class="input-box">
+							<input type="text" class="input-text" value="<?php  echo $product_price; ?>" id="product_price" name="product_price" onfocus="this.blur()" readonly/>
+						</div>
+					</div>
+					<div class="field">
+						<label class="required" for="new_price"><em>*</em>Your Price</label>
+						<div class="input-box">
+							<input type="text" class="required-entry input-text" value="" id="new_price" name="new_price">
+						</div>
+					</div>
+				</li>
+				<li class="wide">
+					<label for="comment">Message</label>
+					<div class="input-box">
+						<textarea rows="3" cols="5" class="input-text" title="Comment" id="new_message" name="message"></textarea>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="buttons-set">
+			<p class="required">* Required Fields</p>
+			<input type="text" style="display:none !important;" value="" id="hideit" name="hideit">
+			<button class="button submit-request" title="Submit"><span><span>Submit</span></span></button>
+		</div>
+	</form>
+</div>
+

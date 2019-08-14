@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Webcreta_Bargainprice>
+            <version>1.0.0</version>
+		</Webcreta_Bargainprice>
+	</modules>
+    <frontend>
+        <routers>
+            <bargainprice>
+                <use>standard</use>
+                <args>
+                    <module>Webcreta_Bargainprice</module>
+                    <frontName>bargainprice</frontName>
+				</args>
+			</bargainprice>
+		</routers>
+        <layout>
+            <updates>
+                <bargainprice>
+                    <file>bargainprice.xml</file>
+				</bargainprice>
+			</updates>
+		</layout>
+	</frontend>
+    <admin>
+        <routers>
+			<bargainprice>
+				<use>admin</use>
+				<args>
+					<module>Webcreta_Bargainprice</module>
+					<frontName>bargainprice</frontName>
+				</args>
+			</bargainprice>
+		</routers>
+	</admin>
+    <adminhtml>
+		<menu>
+			<bargainprice module="bargainprice">
+				<title>Bargain Price</title>
+				<sort_order>71</sort_order> 
+				<depends>
+					<module>Webcreta_Bargainprice</module>
+					<config>bargainprice/bargainselect/enabled</config>
+				</depends>
+				<children>
+					<items module="bargainprice">
+						<title>Manage Bargain Price</title>
+						<sort_order>0</sort_order>
+						<action>bargainprice/adminhtml_bargainprice</action>
+					</items>
+				</children>
+			</bargainprice>
+		</menu>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<Webcreta_Bargainprice>
+							<title>Bargainprice Module</title>
+							<sort_order>10</sort_order>
+						</Webcreta_Bargainprice>
+						<system>
+							<children>
+								<config>
+									<children>
+										<bargainprice translate="title" module="bargainprice"> 
+											<title>Bargainprice Settings</title>
+											<sort_order>50</sort_order>
+										</bargainprice>
+									</children>							
+								</config>
+							</children>
+						</system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<bargainprice>
+					<file>bargainprice.xml</file>
+				</bargainprice>
+			</updates>
+		</layout>
+	</adminhtml>   
+    <global>
+        <models>
+            <bargainprice>
+                <class>Webcreta_Bargainprice_Model</class>
+                <resourceModel>bargainprice_mysql4</resourceModel>
+			</bargainprice>
+            <bargainprice_mysql4>
+                <class>Webcreta_Bargainprice_Model_Mysql4</class>
+                <entities>
+					<bargainprice>
+						<table>bargainprice</table>
+					</bargainprice>
+				</entities>
+			</bargainprice_mysql4>
+		</models>
+       <template>
+            <email>
+			<bargainprice_approve_email_template module="bargainprice">
+				<label>Template to notify customer that request has been approved.</label>
+				<file>bargainprice_approve_email_template.html</file>
+				<type>html</type>
+			</bargainprice_approve_email_template>
+			<bargainprice_finalprice_email_template module="bargainprice">
+				<label>Template to notify customer final price of product.</label>
+				<file>bargainprice_finalprice_email_template.html</file>
+				<type>html</type>
+			</bargainprice_finalprice_email_template>
+			<bargainprice_email_template module="bargainprice">
+				<label>Template to notify customer final price of product.</label>
+				<file>bargainprice_email_template.html</file>
+				<type>html</type>
+			</bargainprice_email_template>
+            </email>
+		</template>
+        <events>
+            <sales_order_place_after>
+                <observers>
+                    <Webcreta_Bargainprice_Observer>
+                        <type>model</type>
+                        <class>Webcreta_Bargainprice_Model_Observer</class>
+                        <method>removeCoupon</method>
+					</Webcreta_Bargainprice_Observer>
+				</observers>
+			</sales_order_place_after>
+		</events>
+        <resources>
+            <bargainprice_setup>
+                <setup>
+                    <module>Webcreta_Bargainprice</module>
+				</setup>
+                <connection>
+                    <use>core_setup</use>
+				</connection>
+			</bargainprice_setup>
+            <bargainprice_write>
+                <connection>
+                    <use>core_write</use>
+				</connection>
+			</bargainprice_write>
+            <bargainprice_read>
+                <connection>
+                    <use>core_read</use>
+				</connection>
+			</bargainprice_read>
+		</resources>
+        <blocks>
+            <bargainprice>
+                <class>Webcreta_Bargainprice_Block</class>
+			</bargainprice>
+		</blocks>
+        <helpers>
+            <bargainprice>
+                <class>Webcreta_Bargainprice_Helper</class>
+			</bargainprice>
+		</helpers>
+	</global>
+</config>

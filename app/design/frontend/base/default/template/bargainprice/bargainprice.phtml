@@ -1,0 +1,38 @@
+<?php $_helper = $this->helper('catalog/output'); ?>
+<?php $_product = Mage::registry('current_product'); ?>
+<?php $loggedIn = Mage::helper('customer')->isLoggedIn(); ?>
+<?php if($configValue = Mage::getStoreConfig('bargainprice/bargainselect/enabled') == 1) :?>
+<?php 
+	if($_product->getTypeID() == "grouped" || $_product->getTypeID() == "virtual" || $_product->getTypeID() == "bundle" || $_product->getTypeID() == "downloadable" || $_product->getTypeID() == "configurable"){
+		
+	}else{
+?>
+	<div class="newPricebutton" style="margin-top:10px;">
+		<button class="button new-price" type="button"><span><span>Bargain Price</span></button></a>
+		<div id="sku-container" style="display:none"><?php echo $_product->getId() ?></div>
+	</div>
+<?php 
+	}
+?>
+
+
+
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>bargainprice/js/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>bargainprice/fancybox/jquery.fancybox.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl(); ?>bargainprice/fancybox/jquery.fancybox.css" />
+
+<script type="text/javascript"> 
+	
+	function getBaseUrl() { return '<?php  echo Mage::getBaseUrl() ?>'; } 
+	function getMediaUrl() { return '<?php  echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) ?>'; } 
+	function getLogInStatus() { return '<?php echo $loggedIn ;  ?>'; }
+	function getProductId() { return '<?php echo $_product->getId() ?>'; }
+	function getProductSku() { return '<?php echo $_product->getSku() ?>'; }
+	function getProductName() { return '<?php echo $_product->getName() ?>'; }
+	function getProductPrice() { return '<?php echo $_product->getFinalPrice() ?>';}
+	function getCustomerAccount(){ return '<?php echo Mage::getUrl("bargainprice/accountpage")?>';	}
+	
+</script>
+
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>bargainprice/js/webcreta.js"></script>
+<?php endif;?>

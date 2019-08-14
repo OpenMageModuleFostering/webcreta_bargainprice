@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Webcreta_Bargainprice>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Webcreta_Bargainprice>
+    </modules>
+</config> 

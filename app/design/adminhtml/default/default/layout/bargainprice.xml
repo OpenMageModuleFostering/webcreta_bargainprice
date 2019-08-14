@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <bargainprice_adminhtml_bargainprice_index>
+        <reference name="content">
+            <block type="bargainprice/adminhtml_bargainprice" name="bargainprice" />
+        </reference>
+    </bargainprice_adminhtml_bargainprice_index>
+    <bargainprice_adminhtml_bargainprice_cancel>
+
+	<reference name="head">
+            	
+			<action method="addCss"><stylesheet>bargainprice/css/bargainprice.css</stylesheet></action>
+
+      	</reference>
+
+        <reference name="content">
+            <block type="bargainprice/adminhtml_bargainprice" name="bargainprice_cancelform" template="bargainprice/cancelform.phtml" />
+        </reference>
+
+
+    </bargainprice_adminhtml_bargainprice_cancel>
+    <bargainprice_adminhtml_bargainprice_edit>
+	 <reference name="head">
+            <action method="addItem">
+                <type>js_css</type>
+                <name>prototype/windows/themes/default.css</name>
+            </action>
+            <action method="addCss">
+                <name>bargainprice/lib/prototype/windows/themes/magento.css</name>
+            </action>
+        </reference>
+    </bargainprice_adminhtml_bargainprice_edit>
+</layout>

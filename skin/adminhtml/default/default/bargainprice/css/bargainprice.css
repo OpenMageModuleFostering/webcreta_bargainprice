@@ -1,0 +1,43 @@
+.bargainprice-adminhtml-bargainprice-cancel{ overflow:hidden; }
+.cancelprice_form {padding:10px;}
+.info-cancelform-top { background:#FFF9E9; font-size: 15px; line-height: 20px;padding: 5px; }
+
+.required-fail {
+
+		background: none repeat scroll 0 0 #FAEBE7 !important;
+    	border: 1px dashed #EB340A !important;
+
+}
+
+
+
+
+
+
+
+
+.success {font-size: 0.95em !important;
+    font-weight: bold !important;
+    margin-bottom: 11px !important;
+    min-height: 23px !important;
+    padding: 8px 8px 2px 32px !important;
+    background: url("images/success_msg_icon.gif") no-repeat scroll 10px 10px #EFF5EA !important;
+    border: 1px solid #95A486 !important;
+    color: #3D6611 !important;
+
+}
+#price_msg { display:none; }
+.error {
+
+		font-size: 0.95em !important;
+		font-weight: bold !important;
+		margin-bottom: 11px !important;
+		min-height: 23px !important;
+		padding: 8px 8px 2px 32px !important;
+		background: url("images/error_msg_icon.gif") no-repeat scroll 10px 10px #FAEBE7 !important;
+		border: 1px solid #F16048 !important;
+		color: #DF280A !important;
+
+
+
+}

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<layout version="1.0.3">
+    <default>
+	</default>
+	
+    <catalog_product_view>
+		<reference name="head">
+			<action method="addCss"><stylesheet>bargainprice/css/bargainprice.css</stylesheet></action>
+		</reference>	
+		<reference name="product.info.addtocart">
+            <block type="bargainprice/bargainprice" name="bargainprice" template="bargainprice/bargainprice.phtml" />
+		</reference>
+	</catalog_product_view>
+	
+	<bargainprice_index_loadform>
+        <reference name="content">
+            <block type="bargainprice/bargainprice" name="bargainprice" template="bargainprice/bargainprice-form.phtml" />
+		</reference>
+	</bargainprice_index_loadform>
+	
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action method="addLink" translate="label" module="customer">
+                <name>custom page</name>
+                <path>bargainprice/accountpage/</path>
+                <label>Webcreta Bargain Price</label>
+			</action>
+		</reference>
+	</customer_account>
+	
+    <bargainprice_accountpage_index translate="label">
+		<reference name="head">
+			<action method="addCss"><stylesheet>bargainprice/css/bargainprice.css</stylesheet></action>
+		</reference>
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="bargainprice/customer" name="bargainprice_customer" before="-" template="bargainprice/bargainprice_customer_page.phtml"/>
+		</reference>
+	</bargainprice_accountpage_index>
+</layout> 

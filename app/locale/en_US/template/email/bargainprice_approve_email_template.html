@@ -1,0 +1,18 @@
+{{template config_path="design/email/header"}}
+{{inlinecss file="email-inline.css"}}
+
+<table cellpadding="0" cellspacing="0" border="0">
+    <tr>
+        <td class="action-content">
+            <h1>Hello, {{var customer_name}}</h1>
+            <h3>Here is your approved request details.</h3>
+             <p><b>Email :</b> {{var customer_email}}</p>
+             <p><b>Product :</b> {{var product}}</p>
+             <p><b>Product price :</b> {{var product_price}}</p>
+             <p><b>New price :</b> {{var new_price}}</p>
+             <p><b>Coupon code :</b> {{var coupon_code}}</p>
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer"}}

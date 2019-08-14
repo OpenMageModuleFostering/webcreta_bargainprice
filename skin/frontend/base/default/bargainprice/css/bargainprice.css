@@ -1,0 +1,15 @@
+.accepted:before  { 
+
+	content: "✔";
+
+	}
+.rejected:before  {
+
+		content:"✘";
+	}
+
+.newPricebutton {
+    float: left;
+    margin-top: 10px;
+    width: 100%;
+}

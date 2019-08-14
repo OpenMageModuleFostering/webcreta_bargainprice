@@ -1,0 +1,43 @@
+<?xml version="1.0"?> 
+<config>
+    <acl>
+	<resources>
+	    <admin>
+		<children>
+		    <system>
+			<children>
+			    <config>
+				<children>
+				    <bargainprice>
+					<title>Bargainprice</title>
+				    </bargainprice>
+				</children>
+			    </config>
+			</children>
+		    </system>	
+		    <webcreta translate="title" module="bargainprice">
+			<title>Webcreta</title>
+			<sort_order>76</sort_order> 
+			<depends>
+				<module>Webcreta_Bargainprice</module>
+				<config>bargainprice/bargainprice/enabled</config>
+			</depends>
+			<children>
+			    <bargainprice translate="title" module="bargainprice">
+				<title>Bargainprice</title>
+				<sort_order>0</sort_order>
+				<children>
+				    <items translate="title" module="bargainprice">
+					<title>Import Product Position</title>
+					<sort_order>0</sort_order>
+					<action>bargainprice/adminhtml_importposition</action>
+																    </items>				    
+				</children>
+			    </bargainprice>
+			</children>
+		    </webcreta>					
+		</children>
+	    </admin>
+        </resources>
+    </acl>
+</config>

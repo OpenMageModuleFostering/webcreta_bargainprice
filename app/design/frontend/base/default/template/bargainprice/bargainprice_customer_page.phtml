@@ -1,0 +1,178 @@
+
+<?php if($configValue = Mage::getStoreConfig('bargainprice/bargainselect/enabled') == 1) :?>
+<div class="message"></div>
+<div class="page-title">
+    <h1><?php echo $this->__('Bargain Price') ?></h1>
+</div>
+<?php  if(Mage::getSingleton('customer/session')->isLoggedIn()) {
+     		$customerData = Mage::getSingleton('customer/session')->getCustomer();
+      		$customer_id = $customerData->getId();
+ 	}
+?>
+<?php  
+	$bargainprice_collection = Mage::getModel('bargainprice/bargainprice')->getCollection();
+	$bargainprice_collection->addFieldToFilter('customer_id',array('eq'=>$customer_id));
+?>
+<table class="data-table" id="my-orders-table">
+    <col width="1" />
+    <col width="1" />
+    <col />
+    <col width="1" />
+    <col width="1" />
+    <col width="1" />
+    <col width="1" />
+    <col width="1" />
+    <col width="1" />
+    <thead>
+        <tr>
+            <th><?php echo $this->__('No.') ?></th>
+            <th><?php echo $this->__('Coupon Code') ?></th>
+            <th><?php echo $this->__('Product') ?></th>
+            <th><?php echo $this->__('Product Id') ?></th>
+            <th><?php echo $this->__('Price') ?></th>
+            <th><?php echo $this->__('Your Price') ?></th>
+	    <th><?php echo $this->__('Owner Price') ?></th>
+	    <th><?php echo $this->__('Accept') ?></th>
+	    <th><?php echo $this->__('Status') ?></th>
+        </tr>
+    </thead>
+    <tbody>
+<?php
+	$i = 1;
+	foreach ( $bargainprice_collection as $bargainprice_coupon ) :
+?>
+        <tr> 
+            <td id="mainId"><?php echo $i; ?></td>
+            <td><span class="nobr"><?php echo $bargainprice_coupon['discount_code']; ?></span></td>
+            <td><?php echo $bargainprice_coupon['product_name']; ?></td>
+            <td><?php echo $bargainprice_coupon['product_sku']; ?></td>
+            <td><?php echo $bargainprice_coupon['product_price']; ?></td>
+            <td><?php echo $bargainprice_coupon['new_price']; ?></td>
+	    <?php if(empty($bargainprice_coupon['owner_bid'])): ?>
+
+		<td>
+
+			<?php if($bargainprice_coupon['status_owner'] == 3):?>
+				<?php echo "--"; ?>
+			<?php else:?>
+				<?php echo"Processing"; ?>
+			<?php endif;?>
+		</td>
+
+	   <?php else :?>
+	
+		<td><?php echo $bargainprice_coupon['owner_bid']; ?></td>
+
+          <?php endif;?>
+	 <td>
+
+		<?php if(($bargainprice_coupon['status_customer'] == 0) && !empty($bargainprice_coupon['owner_bid'])):?>
+	
+					
+			<b><a href ="" class="yes" id="yes<?php echo $bargainprice_coupon['bargainprice_id']; ?>">Yes</a>&nbsp;|&nbsp;<a href="" class="no" id="no<?php echo $bargainprice_coupon['bargainprice_id']; ?>">No</a></b>
+	
+		<?php elseif (($bargainprice_coupon['status_customer'] == 3)):?>
+
+			<?php echo "<span class='rejected'></span>" ;?>
+
+		<?php elseif (($bargainprice_coupon['status_customer'] == 1)):?>
+
+			<?php echo "<span class='accepted'></span>" ;?>
+
+		<?php elseif (empty($bargainprice_coupon['owner_bid'])):?>
+
+			<?php echo "No bid Yet" ;?>
+
+		<?php endif;?>
+
+	</td>
+		
+	<td><?php 
+	
+			if($bargainprice_coupon['status_owner'] == 1){
+	
+				echo $current_status='Approved';	
+			}
+			elseif ($bargainprice_coupon['status_owner'] == 2){
+
+				echo $current_status='Waiting';
+			}
+			elseif ($bargainprice_coupon['status_owner'] == 0){
+
+				echo $current_status='Pending';	
+			}
+			elseif ($bargainprice_coupon['status_owner'] == 3){
+
+				echo $current_status='Rejected';	
+			}
+
+			?>
+	</td>
+	
+	</tr>
+	<?php $i++; 
+	endforeach;
+	?>	
+     
+    </tbody>
+</table>
+<div class="buttons-set">
+    <p class="back-link"><a href="<?php echo $this->getUrl('customer/account/') ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+	
+</div>
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl('js')?>jquery/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl('js')?>jquery/noconflict.js"></script>
+<script type="text/javascript">
+
+	$k(document).ready(function(){
+	
+		$k(".yes").click(function(e){
+			e.preventDefault();
+			var id = $k(this).attr("id");
+			var couponid = id.substring(3); 
+			var baseurl = '<?php  echo Mage::getBaseUrl() ?>';
+			
+			if(confirm("Are You Sure,You want to Accept?")){
+
+				jQuery.ajax({
+				type	: "POST",
+				cache	: false,
+				url	: baseurl+"bargainprice/index/customeraccept",
+				data	: "coupon_id="+couponid,
+				success:function(){
+						window.location.reload();
+				},
+				error:function(){
+						window.location.reload();
+				},
+			});
+			}
+		});
+
+		$k(".no").click(function(e){
+			e.preventDefault();
+
+			var id = $k(this).attr("id");
+			var reject = id.substring(2); 
+			var baseurl = '<?php  echo Mage::getBaseUrl() ?>';
+			
+			if(confirm("Are You Sure,You want to Reject?")){
+
+				jQuery.ajax({
+						type	: "POST",
+						cache	: false,
+						url	: baseurl+"bargainprice/index/customerreject",
+						data	: "coupon_id="+reject,
+
+						success:function(){
+							window.location.reload();
+						},
+						error:function(){
+							window.location.reload();
+						},
+					});
+				}
+			});
+		});
+</script>
+<?php endif;?>
