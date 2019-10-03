@@ -1,3 +1,5 @@
+
+
 ## Original Package Description
 
 Price Bargain Extension customers can bargain the price of the products through the products page.Customers can send the price to the store owner for the acceptance, refusal, or make new offers.
